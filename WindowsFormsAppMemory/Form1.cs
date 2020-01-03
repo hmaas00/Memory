@@ -34,6 +34,7 @@ namespace WindowsFormsAppMemory
                     {
                         f.Close();
                         Helper.SaveDict();
+                        Helper.LoadDict();
                     }
                    
                 } while (res == DialogResult.Cancel);
