@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.buttonAddKV = new System.Windows.Forms.Button();
             this.textBoxName = new System.Windows.Forms.TextBox();
             this.textBoxList = new System.Windows.Forms.TextBox();
@@ -47,6 +48,7 @@
             this.comboBoxKeyDeletable = new System.Windows.Forms.ComboBox();
             this.groupBoxModoSeguro = new System.Windows.Forms.GroupBox();
             this.groupBoxModoEstupido = new System.Windows.Forms.GroupBox();
+            this.buttonChangeMain = new System.Windows.Forms.Button();
             this.groupBoxModoSeguro.SuspendLayout();
             this.groupBoxModoEstupido.SuspendLayout();
             this.SuspendLayout();
@@ -80,6 +82,7 @@
             this.textBoxList.Multiline = true;
             this.textBoxList.Name = "textBoxList";
             this.textBoxList.ReadOnly = true;
+            this.textBoxList.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.textBoxList.Size = new System.Drawing.Size(360, 470);
             this.textBoxList.TabIndex = 0;
             this.textBoxList.TabStop = false;
@@ -293,12 +296,25 @@
             this.groupBoxModoEstupido.TabStop = false;
             this.groupBoxModoEstupido.Text = "Modo Estúpido";
             // 
+            // buttonChangeMain
+            // 
+            this.buttonChangeMain.BackColor = System.Drawing.Color.DarkViolet;
+            this.buttonChangeMain.ForeColor = System.Drawing.Color.Violet;
+            this.buttonChangeMain.Location = new System.Drawing.Point(35, 582);
+            this.buttonChangeMain.Name = "buttonChangeMain";
+            this.buttonChangeMain.Size = new System.Drawing.Size(224, 35);
+            this.buttonChangeMain.TabIndex = 14;
+            this.buttonChangeMain.Text = "Mudar senha principal";
+            this.buttonChangeMain.UseVisualStyleBackColor = false;
+            this.buttonChangeMain.Click += new System.EventHandler(this.ButtonChangeMain_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Lavender;
             this.ClientSize = new System.Drawing.Size(858, 633);
+            this.Controls.Add(this.buttonChangeMain);
             this.Controls.Add(this.groupBoxModoEstupido);
             this.Controls.Add(this.groupBoxModoSeguro);
             this.Controls.Add(this.comboBoxKeyDeletable);
@@ -308,6 +324,7 @@
             this.Controls.Add(this.labelChave);
             this.Controls.Add(this.textBoxList);
             this.Controls.Add(this.textBoxName);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "Form1";
             this.Text = "Agora eu lembro!";
             this.groupBoxModoSeguro.ResumeLayout(false);
@@ -340,6 +357,7 @@
         private System.Windows.Forms.ComboBox comboBoxKeyDeletable;
         private System.Windows.Forms.GroupBox groupBoxModoSeguro;
         private System.Windows.Forms.GroupBox groupBoxModoEstupido;
+        private System.Windows.Forms.Button buttonChangeMain;
     }
 }
 

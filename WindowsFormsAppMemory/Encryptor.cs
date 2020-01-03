@@ -16,6 +16,8 @@ namespace WindowsFormsAppMemory
 
         static public string CONFIG_FILE_NAME = (Directory.GetCurrentDirectory() + @"\config.cfg");
 
+        static public string MAIN_CODE_FILE_NAME = (Directory.GetCurrentDirectory() + @"\config_main.cfg");
+
         public static bool IsFirstExec()
         {
             if (File.Exists(CONFIG_FILE_NAME))
@@ -27,26 +29,21 @@ namespace WindowsFormsAppMemory
 
         public static void DefineKIV()
         {
-            if (IsFirstExec())
+            try
             {
-                try
+                using (AesCryptoServiceProvider myAes = new AesCryptoServiceProvider())
                 {
-                    using (AesCryptoServiceProvider myAes = new AesCryptoServiceProvider())
-                    {
-                        // Encrypt the string to an array of bytes.
-                        KIVPair kiv = new KIVPair(myAes.Key, myAes.IV);
-                        WriteConfig(kiv);
-                    }
-                }
-                catch (Exception e)
-                {
-                    WriteLog(e.Message);
-                    WriteLog(e.StackTrace);
+                    // Encrypt the string to an array of bytes.
+                    KIVPair kiv = new KIVPair(myAes.Key, myAes.IV);
+                    WriteConfig(kiv);
                 }
             }
+            catch (Exception e)
+            {
+                WriteLog(e.Message);
+                WriteLog(e.StackTrace);
+            }
         }
-
-        
 
         public static void WriteConfig(KIVPair kiv)
         {
@@ -103,15 +100,6 @@ namespace WindowsFormsAppMemory
                     fs.Close();
                 }
             }
-        }
-
-        
-
-        
-
-        public static void TestUser()
-        {
-            
         }
 
         public static byte[] EncryptStringToBytes_Aes(string plainText)
@@ -195,7 +183,7 @@ namespace WindowsFormsAppMemory
             return plaintext;
 
         }
-        public static void ShowKeyGen()
+        /*public static void ShowKeyGen()
         {
             using (AesManaged aesAlg = new AesManaged())
             {
@@ -203,9 +191,51 @@ namespace WindowsFormsAppMemory
                 Console.WriteLine(aesAlg.Key.Length);
                 Console.WriteLine(aesAlg.Key.GetValue(1));
             }
-        }
+        }*/
+
+
+        static public void CreateMainCode(string code)
+        {
+            //todo criar main code
+            byte[] c = Encryptor.EncryptStringToBytes_Aes(code);
+            try
+            {
+                FileStream fs = null;
+
+                BinaryWriter bw = new BinaryWriter(File.Open(MAIN_CODE_FILE_NAME, FileMode.Create));
+
+                bw.Write(c);
                 
-        
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("Falha ao salvar, motivo: " + e.Message);
+
+            }
+
+        }
+        static public string ReadMainCode()
+        {
+            //todo ler main code
+            try
+            {
+                FileStream fs = null;
+
+                StreamReader sr = new StreamReader(File.Open(MAIN_CODE_FILE_NAME, FileMode.Open));
+
+                string s = sr.ReadLine();
+
+                return null;
+                //DecryptStringFromBytes_Aes(s.);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("Falha ao salvar, motivo: " + e.Message);
+                return null;
+            }
+
+        }
+
     }
 
     [Serializable()]

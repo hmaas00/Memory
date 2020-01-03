@@ -24,6 +24,7 @@ namespace WindowsFormsAppMemory
         public static int CHAVE_SIZE = 20;
         public static int VALOR_SIZE = 20;
 
+        
 
         static public bool AddToDict(string k, int codeSize, int quantSpecial, int quantNumerical)
         {
@@ -177,11 +178,8 @@ namespace WindowsFormsAppMemory
 
         public static void WriteToTextBox(TextBox tb)
         {
-            string s = "";
-
+            
             tb.Text = "";
-
-            //todo formatação - ordenar
 
             List<KeyValuePair <string, StringByteArPair>> tempList = dict.ToList();
 
@@ -191,36 +189,28 @@ namespace WindowsFormsAppMemory
             {
                 tb.AppendText(item.Key + ":" + Helper.dict[item.Key].Str + "\n");
             }
-
         }
         public static int CompareByName(KeyValuePair<string, StringByteArPair> a, KeyValuePair<string, StringByteArPair> b)
         {
             return String.Compare(a.Key, b.Key);
         }
         public static void updateComboDeletable(ComboBox cb)
-        {
-            
+        {   
             cb.Items.Clear();
 
             List<KeyValuePair<string, StringByteArPair>> tempList = dict.ToList();
 
             tempList.Sort(CompareByName);
-            
-            /*
-            foreach (var item in dict.Keys)
-            {
-                cb.Items.Add(item);
-            }*/
+         
             foreach (var item in tempList)
             {
-                cb.Items.Add(item.Key);
+                if (! item.Key.Equals("Main"))
+                {
+                    cb.Items.Add(item.Key);
+                }
+                
             }
-
         }
-
-
-
-
 
         static private string GenCode(int codeSize, int quantSpecial, int quantNumerical)
         {
@@ -320,8 +310,6 @@ namespace WindowsFormsAppMemory
 
         static private char GetRandomChar()
         {
-            
-
             int test = 40;
 
             while (     
@@ -335,9 +323,6 @@ namespace WindowsFormsAppMemory
 
             return (char)test;
         }
-
-        
-
 
         static private bool CheckHasMinSpecialChars(string stringToCheck, int quant)
         {

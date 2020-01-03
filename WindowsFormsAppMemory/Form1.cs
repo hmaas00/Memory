@@ -15,14 +15,62 @@ namespace WindowsFormsAppMemory
     {
         public Form1()
         {
-            Encryptor.DefineKIV();
+            if (Encryptor.IsFirstExec())
+            {
+                Encryptor.DefineKIV();
+                DialogResult res;
+                do
+                {
+                    Form f = new FormMainPassword();
+                    f.StartPosition = FormStartPosition.CenterScreen;
+                    res = f.ShowDialog(this);
+                    
+                    if (res == DialogResult.Cancel)
+                    {
+                        MessageBox.Show("Você precisa fornecer uma senha principal!", "Atenção!", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        f.Close();
+                    }
+                    else
+                    {
+                        f.Close();
+                        Helper.SaveDict();
+                    }
+                   
+                } while (res == DialogResult.Cancel);
 
+                
+            }
+            else
+            {
+                Helper.LoadDict();
+                
+                
+                DialogResult res;
+
+                do
+                {
+                    Form f = new FormLogin();
+                    f.StartPosition = FormStartPosition.CenterScreen;
+                    res = f.ShowDialog(this);
+
+                    if (res == DialogResult.Cancel)
+                    {
+                        MessageBox.Show("Essa não é a senha principal!", "Atenção!", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        f.Close();
+                    }
+                    else
+                    {
+                        f.Close();
+                        
+                    }
+
+                } while (res == DialogResult.Cancel);
+            }
+            
             InitializeComponent();
 
-            if (Helper.LoadDict())
-            {
-                Helper.WriteToTextBox(this.textBoxList);
-            }
+            Helper.WriteToTextBox(this.textBoxList);
+
         }
 
         private void ButtonAdd_Click(object sender, EventArgs e)
@@ -192,6 +240,46 @@ namespace WindowsFormsAppMemory
 
         private void LabelChave_Click(object sender, EventArgs e)
         {
+
+        }
+
+        private void ButtonChangeMain_Click(object sender, EventArgs e)
+        {
+
+
+            DialogResult res0 = MessageBox.Show($"Tem certeza que deseja trocar a senha principal do programa?",
+                "Confirmação", MessageBoxButtons.OKCancel, MessageBoxIcon.Question);
+
+            if (res0 == DialogResult.OK)
+            {
+                DialogResult res;
+                do
+                {
+                    Form f = new FormMainPassword();
+                    f.StartPosition = FormStartPosition.CenterScreen;
+                    res = f.ShowDialog(this);
+
+                    if (res == DialogResult.Cancel)
+                    {
+                        MessageBox.Show("Você precisa fornecer uma senha principal!", "Atenção!", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        f.Close();
+                    }
+                    else
+                    {
+                        f.Close();
+                        Helper.SaveDict();
+                        Helper.LoadDict();
+                        Helper.WriteToTextBox(this.textBoxList);
+                        MessageBox.Show("Senha principal definida!", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+
+                } while (res == DialogResult.Cancel);
+
+            }
+            else
+            {
+
+            }
 
         }
     }
